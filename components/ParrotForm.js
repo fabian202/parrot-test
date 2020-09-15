@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Loader from 'react-loader-spinner';
+import { usePersistedState } from '../hooks/usePersistedState';
 
-const ParrotForm = ({onSubmit, parrot, loading}) => {
-  const [state, setState] = useState(parrot);
-  console.log(parrot)
+const ParrotForm = ({ onSubmit, loading }) => {
+  const [parrot, setParrot] = usePersistedState('parrot', {
+    name: '',
+    description: '',
+    country: '',
+  });
 
   const handleChange = (evt) => {
     const { value, name } = evt.target;
-    setState({ ...state, [name]: value });
+    setParrot({ ...parrot, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(state);
+    const { name } = parrot;
+    //Get the first and last name
+    const [firstName, lastName] = name.split(' ');
+    onSubmit({ ...parrot, firstName, lastName });
   };
 
   return (
@@ -25,24 +32,25 @@ const ParrotForm = ({onSubmit, parrot, loading}) => {
           type="text"
           placeholder="Enter Full Name"
           onChange={handleChange}
-          value={state?.name || ''}
+          value={parrot?.name || ''}
         />
         <label>Description</label>
         <textarea
           name="description"
           placeholder="Long Description"
           onChange={handleChange}
-          value={state?.description || ''}
+          value={parrot?.description || ''}
         ></textarea>
         <label>Country</label>
         <select
           name="country"
           onChange={handleChange}
-          value={state?.country || ''}
+          value={parrot?.country || ''}
         >
-          <option value="usa">USA</option>
+          <option value=""></option>
           <option value="col">Colombia</option>
           <option value="ca">Canada</option>
+          <option value="usa">USA</option>
         </select>
         <button type="submit">Save Parrot</button>
         {loading && <Loader type="Oval" height={30} />}
