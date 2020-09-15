@@ -1,0 +1,6 @@
+.error {
+  color:var(--text-main);
+  background-color: var(--color-ansi-red);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
