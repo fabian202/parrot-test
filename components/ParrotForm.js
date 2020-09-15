@@ -33,6 +33,7 @@ const ParrotForm = ({ onSubmit, loading }) => {
           placeholder="Enter Full Name"
           onChange={handleChange}
           value={parrot?.name || ''}
+          required
         />
         <label>Description</label>
         <textarea
@@ -46,6 +47,7 @@ const ParrotForm = ({ onSubmit, loading }) => {
           name="country"
           onChange={handleChange}
           value={parrot?.country || ''}
+          required
         >
           <option value=""></option>
           <option value="col">Colombia</option>
